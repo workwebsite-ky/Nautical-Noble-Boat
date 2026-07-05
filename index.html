@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nautical Noble Boat – Premium Marine Services</title>
+  <meta name="description" content="Nautical Noble Boat offers world-class yacht, boat, and ship services. Explore our luxury fleet, premium packages, and elite marine experiences." />
+  <meta name="keywords" content="luxury yacht, boat rental, ship services, nautical, premium marine, yacht charter, vessel cleaning, boat maintenance" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       CSS VARIABLES & RESET
+    ============================================= */
+    :root {
+      --navy:       #0a1628;
+      --deep-blue:  #0d2240;
+      --ocean:      #1a4a6b;
+      --sky:        #5ba4cf;
+      --light-blue: #a8d8f0;
+      --aqua:       #7ecfcf;
+      --gold:       #c9d96b;
+      --yellow-g:   #b5cc3a;
+      --white:      #f4f8fb;
+      --off-white:  #dde8f0;
+      --black:      #060e1a;
+      --glass:      rgba(255,255,255,0.06);
+      --glass-border: rgba(168,216,240,0.18);
+      --shadow:     0 8px 40px rgba(0,0,0,0.45);
+      --shadow-lg:  0 20px 80px rgba(0,0,0,0.6);
+      --radius:     14px;
+      --transition: 0.4s cubic-bezier(0.25,0.8,0.25,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* =============================================
+       LOADING SCREEN
+    ============================================= */
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--black);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-anchor {
+      width: 70px; height: 70px;
+      position: relative;
+      animation: anchor-spin 2s linear infinite;
+    }
+    .loader-anchor svg { width: 100%; height: 100%; }
+    @keyframes anchor-spin { to { transform: rotate(360deg); } }
+    .loader-text {
+      margin-top: 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.4em;
+      color: var(--sky);
+      text-transform: uppercase;
+      animation: pulse-text 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse-text { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+    /* =============================================
+       SCROLLBAR
+    ============================================= */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--sky); border-radius: 3px; }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 80px;
+      transition: background 0.5s ease, box-shadow 0.5s ease, height 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(10,22,40,0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 2px 30px rgba(0,0,0,0.5);
+      height: 66px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .nav-logo-icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--sky), var(--aqua));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .nav-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      line-height: 1.1;
+    }
+    .nav-logo-text span { display: block; font-size: 0.62rem; letter-spacing: 0.25em; font-weight: 300; color: var(--sky); text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+    .nav-links {
+      display: flex; gap: 2.5rem; align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+      color: var(--off-white); position: relative; padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+      background: var(--gold); transition: width 0.35s ease;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .nav-links a.active::after { width: 100%; }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--sky), var(--aqua));
+      color: var(--navy) !important;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-weight: 600 !important;
+      letter-spacing: 0.06em !important;
+      transition: transform 0.3s, box-shadow 0.3s !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(91,164,207,0.45); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px; background: var(--white);
+      transition: var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 998;
+      background: rgba(6,14,26,0.97);
+      backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 1.6rem; font-family: 'Playfair Display', serif; color: var(--white); }
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    #home {
+      min-height: 100vh;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        linear-gradient(180deg, rgba(6,14,26,0.55) 0%, rgba(10,22,40,0.75) 60%, var(--navy) 100%),
+        url('https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=1920&q=80') center/cover no-repeat;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(91,164,207,0.08) 0%, transparent 70%);
+    }
+    /* Animated waves */
+    .hero-waves {
+      position: absolute; bottom: 0; left: 0; width: 100%; z-index: 1;
+      overflow: hidden; line-height: 0;
+    }
+    .hero-waves svg { display: block; }
+    .wave1 { animation: wave-move 6s ease-in-out infinite; }
+    .wave2 { animation: wave-move 8s ease-in-out infinite reverse; opacity: 0.5; }
+    @keyframes wave-move { 0%,100%{transform:translateX(0)} 50%{transform:translateX(-3%)} }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; max-width: 900px; padding: 0 5%;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--sky); border: 1px solid var(--glass-border);
+      padding: 7px 20px; border-radius: 30px; margin-bottom: 28px;
+      background: var(--glass); backdrop-filter: blur(10px);
+      animation: fade-up 0.8s ease 0.3s both;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 900; line-height: 1.05;
+      margin-bottom: 24px;
+      animation: fade-up 0.8s ease 0.5s both;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--off-white); max-width: 580px; margin: 0 auto 40px;
+      font-weight: 300; line-height: 1.8;
+      animation: fade-up 0.8s ease 0.7s both;
+    }
+    .hero-buttons {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      animation: fade-up 0.8s ease 0.9s both;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--sky) 0%, var(--aqua) 100%);
+      color: var(--navy); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.08em;
+      padding: 15px 36px; border-radius: 40px; border: none; cursor: pointer;
+      text-transform: uppercase; transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 6px 30px rgba(91,164,207,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(91,164,207,0.5); }
+    .btn-outline {
+      background: transparent; color: var(--white); font-weight: 600; font-size: 0.9rem;
+      letter-spacing: 0.08em; padding: 14px 36px; border-radius: 40px;
+      border: 1px solid var(--glass-border); cursor: pointer; text-transform: uppercase;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      backdrop-filter: blur(10px);
+    }
+    .btn-outline:hover { background: var(--glass); border-color: var(--sky); transform: translateY(-3px); }
+    .hero-scroll {
+      position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0.6; animation: bounce 2.5s ease-in-out infinite;
+    }
+    .hero-scroll span { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    /* Stats bar */
+    .stats-bar {
+      position: relative; z-index: 2;
+      background: var(--glass); backdrop-filter: blur(20px);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 24px 5%;
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 10px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: var(--gold);
+    }
+    .stat-label { font-size: 0.75rem; color: var(--off-white); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* =============================================
+       SHARED SECTION STYLES
+    ============================================= */
+    section { padding: 100px 5%; }
+    .section-tag {
+      font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--sky); display: block; margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.15;
+      margin-bottom: 18px;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-subtitle {
+      font-size: 1.05rem; color: var(--off-white); font-weight: 300;
+      max-width: 550px; line-height: 1.8;
+    }
+    .section-header { margin-bottom: 60px; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-subtitle { margin: 0 auto; }
+    .divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, var(--sky), var(--gold));
+      margin: 20px 0;
+      border-radius: 2px;
+    }
+    .divider.center { margin: 20px auto; }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0; transform: translateX(-40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0; transform: translateX(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =============================================
+       SERVICES PREVIEW
+    ============================================= */
+    #services-preview { background: var(--deep-blue); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
+    .service-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--sky), var(--gold));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .service-card:hover { transform: translateY(-8px); box-shadow: var(--shadow); border-color: var(--sky); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, rgba(91,164,207,0.15), rgba(201,217,107,0.1));
+      border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 22px;
+      border: 1px solid var(--glass-border);
+    }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .service-card p { font-size: 0.9rem; color: var(--off-white); line-height: 1.75; }
+
+    /* =============================================
+       ABOUT / STORY
+    ============================================= */
+    #about { background: var(--navy); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap img {
+      width: 100%; border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+    }
+    .about-img-badge {
+      position: absolute; bottom: -24px; right: -24px;
+      background: linear-gradient(135deg, var(--sky), var(--aqua));
+      border-radius: 16px; padding: 22px 28px;
+      box-shadow: var(--shadow);
+    }
+    .about-img-badge strong {
+      display: block; font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--navy); font-weight: 900;
+    }
+    .about-img-badge span { font-size: 0.78rem; color: var(--navy); font-weight: 600; }
+    .about-features { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+    .about-feature {
+      display: flex; gap: 16px; align-items: flex-start;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 12px; padding: 16px 20px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .about-feature:hover { transform: translateX(6px); border-color: var(--sky); }
+    .about-feature-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .about-feature h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 3px; }
+    .about-feature p { font-size: 0.85rem; color: var(--off-white); }
+
+    /* =============================================
+       FULL SERVICES PAGE
+    ============================================= */
+    #services { background: var(--deep-blue); }
+    .services-full-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+    }
+    .service-full-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+    .service-full-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .service-full-img {
+      height: 220px; object-fit: cover; width: 100%;
+    }
+    .service-full-body { padding: 28px; }
+    .service-full-body h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 10px;
+    }
+    .service-full-body p { font-size: 0.9rem; color: var(--off-white); line-height: 1.75; margin-bottom: 18px; }
+    .service-tag-badge {
+      display: inline-block; font-size: 0.7rem; letter-spacing: 0.1em;
+      padding: 5px 14px; border-radius: 20px;
+      background: rgba(91,164,207,0.15); color: var(--sky);
+      border: 1px solid rgba(91,164,207,0.3);
+    }
+
+    /* =============================================
+       PACKAGES / PRICING
+    ============================================= */
+    #packages { background: var(--navy); }
+    .packages-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px; align-items: start;
+    }
+    .package-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px; padding: 40px 32px;
+      transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s;
+      position: relative;
+    }
+    .package-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); }
+    .package-card.popular {
+      border-color: var(--sky);
+      background: linear-gradient(160deg, rgba(91,164,207,0.12) 0%, rgba(126,207,207,0.06) 100%);
+      transform: scale(1.03);
+    }
+    .package-card.popular:hover { transform: scale(1.03) translateY(-10px); }
+    .popular-badge {
+      position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--sky), var(--aqua));
+      color: var(--navy); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 7px 20px; border-radius: 20px;
+      white-space: nowrap;
+    }
+    .package-tier {
+      font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--sky); margin-bottom: 8px;
+    }
+    .package-name {
+      font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .package-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 900; color: var(--gold);
+      line-height: 1; margin-bottom: 6px;
+    }
+    .package-price sup { font-size: 1.2rem; }
+    .package-price-note { font-size: 0.8rem; color: var(--off-white); margin-bottom: 28px; }
+    .package-divider { height: 1px; background: var(--glass-border); margin-bottom: 24px; }
+    .package-features { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .package-feature {
+      display: flex; gap: 12px; align-items: center;
+      font-size: 0.88rem;
+    }
+    .package-feature-icon { color: var(--gold); font-size: 0.9rem; flex-shrink: 0; }
+    .btn-package {
+      width: 100%; padding: 14px; border-radius: 40px;
+      font-weight: 700; font-size: 0.88rem; letter-spacing: 0.08em;
+      text-transform: uppercase; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;
+      border: none;
+    }
+    .btn-package.primary {
+      background: linear-gradient(135deg, var(--sky), var(--aqua));
+      color: var(--navy);
+    }
+    .btn-package.outline {
+      background: transparent; color: var(--white);
+      border: 1px solid var(--glass-border);
+    }
+    .btn-package:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(91,164,207,0.3); }
+
+    /* =============================================
+       TESTIMONIALS
+    ============================================= */
+    #testimonials { background: var(--deep-blue); }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .testimonial-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: var(--radius); padding: 32px;
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+    .testimonial-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .testimonial-stars { font-size: 0.9rem; color: var(--gold); margin-bottom: 18px; }
+    .testimonial-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-style: italic; line-height: 1.8;
+      color: var(--off-white); margin-bottom: 24px;
+    }
+    .testimonial-author { display: flex; gap: 14px; align-items: center; }
+    .testimonial-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--sky), var(--aqua));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1.1rem; color: var(--navy);
+      flex-shrink: 0;
+    }
+    .testimonial-name { font-weight: 600; font-size: 0.92rem; }
+    .testimonial-role { font-size: 0.78rem; color: var(--sky); }
+
+    /* =============================================
+       WHY CHOOSE US
+    ============================================= */
+    #why { background: var(--navy); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .why-card {
+      text-align: center; padding: 36px 24px;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      transition: transform 0.4s, border-color 0.4s;
+    }
+    .why-card:hover { transform: translateY(-6px); border-color: var(--gold); }
+    .why-card-icon { font-size: 2.2rem; margin-bottom: 18px; }
+    .why-card h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 10px;
+    }
+    .why-card p { font-size: 0.88rem; color: var(--off-white); line-height: 1.75; }
+
+    /* =============================================
+       FAQ
+    ============================================= */
+    #faq { background: var(--deep-blue); }
+    .faq-list { max-width: 800px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 0; cursor: pointer;
+      font-size: 1rem; font-weight: 500;
+      transition: color 0.3s;
+    }
+    .faq-question:hover { color: var(--sky); }
+    .faq-icon {
+      font-size: 1.3rem; color: var(--sky); transition: transform 0.4s;
+      flex-shrink: 0; margin-left: 16px;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.4s ease;
+      font-size: 0.92rem; color: var(--off-white); line-height: 1.8;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 22px; }
+
+    /* =============================================
+       CONTACT
+    ============================================= */
+    #contact { background: var(--navy); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 70px; align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 28px; }
+    .contact-item { display: flex; gap: 18px; align-items: flex-start; }
+    .contact-item-icon {
+      width: 50px; height: 50px; border-radius: 14px; flex-shrink: 0;
+      background: rgba(91,164,207,0.12); border: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+    }
+    .contact-item h4 { font-weight: 600; font-size: 0.92rem; margin-bottom: 4px; }
+    .contact-item p { font-size: 0.88rem; color: var(--off-white); }
+    .contact-form {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 20px; padding: 44px 40px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .form-group { margin-bottom: 22px; }
+    .form-group label {
+      display: block; font-size: 0.78rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 8px; font-weight: 500;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border); border-radius: 10px;
+      color: var(--white); font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem; padding: 13px 16px;
+      outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--sky);
+      box-shadow: 0 0 0 3px rgba(91,164,207,0.12);
+    }
+    .form-group select option { background: var(--navy); }
+    .form-group textarea { min-height: 130px; }
+    .btn-form {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, var(--sky), var(--aqua));
+      color: var(--navy); font-weight: 700; font-size: 0.9rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border: none; border-radius: 40px; cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .btn-form:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(91,164,207,0.45); }
+    .form-success {
+      display: none; text-align: center; padding: 20px;
+      color: var(--gold); font-size: 1rem;
+    }
+
+    /* =============================================
+       CTA BANNER
+    ============================================= */
+    #cta-banner {
+      background: linear-gradient(135deg, var(--ocean) 0%, var(--deep-blue) 100%);
+      padding: 80px 5%; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #cta-banner::before {
+      content: '';
+      position: absolute; top: -50%; left: -10%;
+      width: 60%; height: 200%;
+      background: radial-gradient(ellipse, rgba(91,164,207,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #cta-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; margin-bottom: 16px;
+    }
+    #cta-banner p {
+      font-size: 1.05rem; color: var(--off-white); margin-bottom: 36px;
+      max-width: 500px; margin-left: auto; margin-right: auto;
+    }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--black);
+      padding: 70px 5% 30px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 50px; margin-bottom: 50px;
+    }
+    .footer-brand .nav-logo { margin-bottom: 18px; }
+    .footer-brand p { font-size: 0.88rem; color: var(--off-white); line-height: 1.8; max-width: 280px; }
+    .footer-social { display: flex; gap: 12px; margin-top: 22px; }
+    .footer-social a {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+    .footer-social a:hover { background: rgba(91,164,207,0.2); border-color: var(--sky); transform: translateY(-3px); }
+    .footer-col h4 {
+      font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--sky); margin-bottom: 20px; font-weight: 600;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col li a { font-size: 0.88rem; color: var(--off-white); transition: color 0.3s, padding-left 0.3s; }
+    .footer-col li a:hover { color: var(--white); padding-left: 5px; }
+    .footer-bottom {
+      border-top: 1px solid var(--glass-border);
+      padding-top: 28px; display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 0.8rem; color: var(--off-white); }
+
+    /* Back to top */
+    #back-top {
+      position: fixed; bottom: 30px; right: 30px; z-index: 900;
+      width: 50px; height: 50px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--sky), var(--aqua));
+      color: var(--navy); font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: var(--shadow);
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.4s, transform 0.4s;
+      border: none;
+    }
+    #back-top.visible { opacity: 1; transform: translateY(0); }
+    #back-top:hover { transform: translateY(-4px); }
+
+    /* WhatsApp button */
+    #wa-btn {
+      position: fixed; bottom: 90px; right: 30px; z-index: 900;
+      width: 50px; height: 50px; border-radius: 50%;
+      background: #25d366; color: white; font-size: 1.4rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow); cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+    }
+    #wa-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(37,211,102,0.4); }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; gap: 50px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .stats-bar { grid-template-columns: repeat(2,1fr); gap: 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form { padding: 28px 22px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      section { padding: 70px 5%; }
+    }
+    @media (max-width: 480px) {
+      .about-img-badge { right: 0; bottom: -16px; }
+      .package-card.popular { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOADER ===== -->
+<div id="loader">
+  <div class="loader-anchor">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="20" r="12" stroke="#5ba4cf" stroke-width="5"/>
+      <line x1="50" y1="32" x2="50" y2="60" stroke="#5ba4cf" stroke-width="5" stroke-linecap="round"/>
+      <line x1="20" y1="60" x2="80" y2="60" stroke="#5ba4cf" stroke-width="5" stroke-linecap="round"/>
+      <path d="M30 60 Q30 90 50 90 Q70 90 70 60" stroke="#5ba4cf" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <line x1="30" y1="70" x2="70" y2="70" stroke="#c9d96b" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <p class="loader-text">Nautical Noble Boat</p>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">
+    <div class="nav-logo-icon">⚓</div>
+    <div class="nav-logo-text">
+      Nautical Noble<span>Premier Marine Services</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#packages" onclick="closeMobile()">Packages</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="#contact" onclick="closeMobile()" style="color:var(--gold)">⚓ Book Now</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section id="home" style="padding:0;">
+  <div class="hero-bg"></div>
+  <div class="hero-content" style="padding-top:120px; padding-bottom:160px;">
+    <div class="hero-tag">⚓ Premium Marine Excellence Since 2008</div>
+    <h1 class="hero-title">
+      Sail Into a World of<br><em>Nautical Luxury</em>
+    </h1>
+    <p class="hero-subtitle">
+      From gleaming yachts to commanding ships — Nautical Noble Boat delivers elite marine services, vessel maintenance, and charter experiences tailored for the discerning seafarer.
+    </p>
+    <div class="hero-buttons">
+      <a href="#packages" class="btn-primary">Explore Packages</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <svg width="20" height="30" viewBox="0 0 20 30" fill="none"><rect x="1" y="1" width="18" height="28" rx="9" stroke="rgba(168,216,240,0.5)" stroke-width="1.5"/><circle cx="10" cy="10" r="3" fill="rgba(168,216,240,0.7)"><animateTransform attributeName="transform" type="translate" values="0 0;0 8;0 0" dur="1.8s" repeatCount="indefinite"/></circle></svg>
+  </div>
+  <div class="hero-waves">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80">
+      <path class="wave1" fill="rgba(13,34,64,0.8)" d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"/>
+      <path class="wave2" fill="rgba(10,22,40,0.6)" d="M0,55 C200,20 400,70 720,45 C1040,20 1240,65 1440,50 L1440,80 L0,80 Z"/>
+    </svg>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <div class="stat-num" data-count="250">0</div>
+    <div class="stat-label">Vessels Serviced</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-count="15">0</div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-count="98">0</div>
+    <div class="stat-label">% Satisfaction</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-count="40">0</div>
+    <div class="stat-label">Expert Crew</div>
+  </div>
+</div>
+
+<!-- ===== SERVICES PREVIEW ===== -->
+<section id="services-preview">
+  <div class="section-header center reveal">
+    <span class="section-tag">What We Offer</span>
+    <h2 class="section-title">Premium Marine <em>Services</em></h2>
+    <div class="divider center"></div>
+    <p class="section-subtitle">From meticulous vessel detailing to full-scale yacht charters, we bring elite standards to every wave.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🛥️</div>
+      <h3>Yacht Charter</h3>
+      <p>Embark on an unforgettable voyage with our curated fleet of luxury yachts. Private, corporate, or event charters available.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.1s">
+      <div class="service-icon">⚓</div>
+      <h3>Vessel Detailing</h3>
+      <p>Expert hull polishing, teak restoration, and interior cleaning — your vessel restored to showroom condition.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.2s">
+      <div class="service-icon">🔧</div>
+      <h3>Marine Maintenance</h3>
+      <p>Full mechanical, electrical, and structural maintenance by certified marine engineers for all vessel types.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.3s">
+      <div class="service-icon">🚢</div>
+      <h3>Ship Management</h3>
+      <p>End-to-end commercial ship management — crewing, technical oversight, regulatory compliance, and logistics.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.4s">
+      <div class="service-icon">🌊</div>
+      <h3>Boat Transport</h3>
+      <p>Secure overland and maritime transport for your vessel, with full insurance and GPS tracking throughout.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.5s">
+      <div class="service-icon">📋</div>
+      <h3>Documentation & Compliance</h3>
+      <p>Flag registration, safety audits, marine surveys, and full IMO/SOLAS compliance management.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal-left">
+      <img src="https://images.unsplash.com/photo-1540946485063-a40da27545f8?w=800&q=80" alt="Luxury yacht on the ocean" />
+      <div class="about-img-badge">
+        <strong>15+</strong>
+        <span>Years of Excellence</span>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <span class="section-tag">Our Story</span>
+      <h2 class="section-title">Born on the <em>Open Water</em></h2>
+      <div class="divider"></div>
+      <p class="section-subtitle" style="max-width:100%">
+        Nautical Noble Boat was founded by seasoned mariners with a singular passion: to redefine what excellence means at sea. We combine decades of hands-on nautical experience with a relentless commitment to quality, safety, and client satisfaction.
+      </p>
+      <br>
+      <p style="font-size:0.92rem; color:var(--off-white); line-height:1.85; margin-bottom:32px;">
+        Whether you're the captain of a weekend sailboat or managing a commercial fleet, we bring the same white-glove approach to every engagement. Our team of certified marine specialists, naval architects, and hospitality professionals stand ready to serve.
+      </p>
+      <div class="about-features">
+        <div class="about-feature">
+          <div class="about-feature-icon">🏅</div>
+          <div>
+            <h4>ISO-Certified Marine Specialists</h4>
+            <p>All our technicians are certified to international marine standards.</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">🌐</div>
+          <div>
+            <h4>Global Port Network</h4>
+            <p>Partnered with marinas and ports across 30+ countries worldwide.</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">🛡️</div>
+          <div>
+            <h4>Fully Insured & Compliant</h4>
+            <p>Comprehensive maritime insurance and full regulatory compliance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FULL SERVICES ===== -->
+<section id="services">
+  <div class="section-header center reveal">
+    <span class="section-tag">Complete Offering</span>
+    <h2 class="section-title">All Marine <em>Services</em></h2>
+    <div class="divider center"></div>
+    <p class="section-subtitle">Every service engineered to exceed the highest standards of the maritime industry.</p>
+  </div>
+  <div class="services-full-grid">
+    <div class="service-full-card reveal">
+      <img class="service-full-img" src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=700&q=80" alt="Luxury yacht charter" />
+      <div class="service-full-body">
+        <h3>Luxury Yacht Charter</h3>
+        <p>Experience the freedom of the seas aboard our meticulously maintained fleet. Choose from day trips, multi-day voyages, corporate events, and private celebrations. Crewed or bare-boat — we customize every detail.</p>
+        <span class="service-tag-badge">Charter</span>
+      </div>
+    </div>
+    <div class="service-full-card reveal" style="transition-delay:0.1s">
+      <img class="service-full-img" src="https://images.unsplash.com/photo-1624969862644-791f3dc98927?w=700&q=80" alt="Boat detailing and cleaning" />
+      <div class="service-full-body">
+        <h3>Professional Vessel Detailing</h3>
+        <p>Our detailing specialists use marine-grade products to restore your boat's brilliance. Services include hull oxidation removal, stainless steel polishing, teak scrubbing, bilge cleaning, and full interior steam clean.</p>
+        <span class="service-tag-badge">Detailing</span>
+      </div>
+    </div>
+    <div class="service-full-card reveal" style="transition-delay:0.2s">
+      <img class="service-full-img" src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=700&q=80" alt="Ship maintenance and engineering" />
+      <div class="service-full-body">
+        <h3>Marine Engineering & Repair</h3>
+        <p>From engine overhauls to electrical diagnostics, our certified engineers handle every mechanical and structural challenge. We service outboards, inboards, diesel engines, generators, and marine electronics.</p>
+        <span class="service-tag-badge">Maintenance</span>
+      </div>
+    </div>
+    <div class="service-full-card reveal" style="transition-delay:0.3s">
+      <img class="service-full-img" src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=700&q=80" alt="Ship fleet management" />
+      <div class="service-full-body">
+        <h3>Commercial Ship Management</h3>
+        <p>Comprehensive management of commercial vessels including bulk carriers, tankers, and container ships. We handle crewing, procurement, port agency, P&I insurance, and ISM/ISPS compliance on your behalf.</p>
+        <span class="service-tag-badge">Fleet Mgmt</span>
+      </div>
+    </div>
+    <div class="service-full-card reveal" style="transition-delay:0.4s">
+      <img class="service-full-img" src="https://images.unsplash.com/photo-1565689157206-0fddef7589a2?w=700&q=80" alt="Boat storage and mooring" />
+      <div class="service-full-body">
+        <h3>Marina Berth & Storage</h3>
+        <p>Secure wet and dry berth storage options at partner marinas. 24/7 security, freshwater/electricity hookups, and shore crew assistance. Perfect for seasonal storage and long-haul layovers.</p>
+        <span class="service-tag-badge">Storage</span>
+      </div>
+    </div>
+    <div class="service-full-card reveal" style="transition-delay:0.5s">
+      <img class="service-full-img" src="https://images.unsplash.com/photo-1521038199265-bc482db0f923?w=700&q=80" alt="Marine safety training" />
+      <div class="service-full-body">
+        <h3>Safety Training & Certification</h3>
+        <p>STCW-compliant safety courses, fire-fighting, sea survival, and first aid training for crew and recreational boaters. Offered on-site or at our state-of-the-art training facility.</p>
+        <span class="service-tag-badge">Training</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PACKAGES ===== -->
+<section id="packages">
+  <div class="section-header center reveal">
+    <span class="section-tag">Pricing</span>
+    <h2 class="section-title">Service <em>Packages</em></h2>
+    <div class="divider center"></div>
+    <p class="section-subtitle">Transparent, all-inclusive packages designed for every vessel size and budget.</p>
+  </div>
+  <div class="packages-grid">
+    <div class="package-card reveal">
+      <p class="package-tier">Tier 1</p>
+      <h3 class="package-name">Sailor</h3>
+      <div class="package-price"><sup>$</sup>299</div>
+      <p class="package-price-note">Per Visit · Small Vessels up to 25ft</p>
+      <div class="package-divider"></div>
+      <div class="package-features">
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Exterior Wash & Rinse</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Cockpit Wipe-Down</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Window & Porthole Clean</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Bilge Inspection</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Basic Engine Check</div>
+      </div>
+      <a href="#contact"><button class="btn-package outline">Get Started</button></a>
+    </div>
+    <div class="package-card popular reveal" style="transition-delay:0.15s">
+      <span class="popular-badge">⭐ Most Popular</span>
+      <p class="package-tier">Tier 2</p>
+      <h3 class="package-name">Captain</h3>
+      <div class="package-price"><sup>$</sup>799</div>
+      <p class="package-price-note">Per Visit · Yachts 25–60ft</p>
+      <div class="package-divider"></div>
+      <div class="package-features">
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Full Detail Interior & Exterior</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Hull Wax & Polish</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Teak Deck Restoration</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Stainless Steel Polish</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Engine & Mechanical Inspection</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Safety Equipment Check</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Bilge Pump & Through-Hull Check</div>
+      </div>
+      <a href="#contact"><button class="btn-package primary">Book This Package</button></a>
+    </div>
+    <div class="package-card reveal" style="transition-delay:0.3s">
+      <p class="package-tier">Tier 3</p>
+      <h3 class="package-name">Admiral</h3>
+      <div class="package-price"><sup>$</sup>1,999</div>
+      <p class="package-price-note">Per Visit · Ships & Superyachts 60ft+</p>
+      <div class="package-divider"></div>
+      <div class="package-features">
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Everything in Captain</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Complete Osmosis Treatment</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Anti-Fouling Paint Application</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Full Engine Overhaul</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Marine Survey Report</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> ISM/ISPS Documentation Review</div>
+        <div class="package-feature"><span class="package-feature-icon">✦</span> Dedicated Account Manager</div>
+      </div>
+      <a href="#contact"><button class="btn-package outline">Get Started</button></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY US ===== -->
+<section id="why">
+  <div class="section-header center reveal">
+    <span class="section-tag">Why Choose Us</span>
+    <h2 class="section-title">The Nautical Noble <em>Difference</em></h2>
+    <div class="divider center"></div>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-card-icon">🏆</div>
+      <h3>Award-Winning Service</h3>
+      <p>Recognized by the International Marine Business Association for three consecutive years of service excellence.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.1s">
+      <div class="why-card-icon">⏱️</div>
+      <h3>On-Time Delivery</h3>
+      <p>We understand that time at sea is precious. Our crews arrive on schedule and complete work within agreed timelines.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.2s">
+      <div class="why-card-icon">🔬</div>
+      <h3>Marine-Grade Products</h3>
+      <p>We use only eco-certified, marine-approved cleaning and maintenance products to protect your vessel and the ocean.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.3s">
+      <div class="why-card-icon">📞</div>
+      <h3>24/7 Concierge Support</h3>
+      <p>Our dedicated client support line is always available — whether you're docked or offshore, we've got you covered.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.4s">
+      <div class="why-card-icon">🌿</div>
+      <h3>Eco-Responsible Practices</h3>
+      <p>Committed to zero-discharge marine detailing and sustainable operations that protect our oceans for future generations.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.5s">
+      <div class="why-card-icon">💳</div>
+      <h3>Flexible Payment Plans</h3>
+      <p>We offer monthly retainer plans, season packages, and interest-free installments for all service tiers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section id="testimonials">
+  <div class="section-header center reveal">
+    <span class="section-tag">Client Reviews</span>
+    <h2 class="section-title">What Our Clients <em>Say</em></h2>
+    <div class="divider center"></div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Nautical Noble transformed our 52-ft sloop from tired to absolutely breathtaking. The teak restoration alone was worth every penny — and the crew was professional, punctual, and discreet."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">JR</div>
+        <div>
+          <div class="testimonial-name">James Rothwell</div>
+          <div class="testimonial-role">Private Yacht Owner, Dubai</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal" style="transition-delay:0.15s">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"We engaged them for our corporate regatta event — 15 vessels needed full detail in 48 hours. They delivered flawlessly. Our guests were blown away. Truly the best marine service we've ever used."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">SL</div>
+        <div>
+          <div class="testimonial-name">Sophia Laurent</div>
+          <div class="testimonial-role">Events Director, Monaco</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal" style="transition-delay:0.3s">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"The Admiral package for our 80-ft superyacht was exceptional. Engine overhaul, full cosmetic restoration, and the marine survey report gave us complete peace of mind for our Atlantic crossing."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">KM</div>
+        <div>
+          <div class="testimonial-name">Khalid Al-Mansouri</div>
+          <div class="testimonial-role">Fleet Owner, Abu Dhabi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq">
+  <div class="section-header center reveal">
+    <span class="section-tag">FAQ</span>
+    <h2 class="section-title">Frequently Asked <em>Questions</em></h2>
+    <div class="divider center"></div>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-question">How long does a full vessel detailing take?<span class="faq-icon">+</span></div>
+      <div class="faq-answer">Depending on vessel size and condition, a full detail typically takes 4–12 hours. Our Sailor package for smaller boats is usually completed in half a day, while larger yachts under the Admiral package may require 1–2 days.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Do you come to my marina or do I bring the boat to you?<span class="faq-icon">+</span></div>
+      <div class="faq-answer">Both options are available. Our mobile teams can travel to your marina for most services. For major overhauls or dry-dock work, we may arrange vessel transport to our facility. Travel fees may apply based on distance.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Are your cleaning products safe for the marine environment?<span class="faq-icon">+</span></div>
+      <div class="faq-answer">Absolutely. We exclusively use EPA-approved, biodegradable, non-toxic marine cleaning products. We adhere to zero-discharge protocols and are proud members of the Clean Boating Foundation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Can I customize a service package for my specific vessel?<span class="faq-icon">+</span></div>
+      <div class="faq-answer">Yes! All our packages are highly customizable. Simply contact us with your vessel details and requirements, and our specialists will build a bespoke service plan and quote within 24 hours.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Do you offer subscription or retainer plans?<span class="faq-icon">+</span></div>
+      <div class="faq-answer">We offer monthly, quarterly, and annual retainer plans with priority scheduling and discounted rates. These are ideal for yacht owners who want year-round vessel care without the hassle of repeated bookings.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">What areas and ports do you currently operate in?<span class="faq-icon">+</span></div>
+      <div class="faq-answer">We currently operate in all major Gulf marinas and have partner crews in 30+ countries. Contact us for availability in your specific port — we're continuously expanding our global network.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA BANNER ===== -->
+<section id="cta-banner">
+  <div class="reveal">
+    <h2>Ready to Set <em style="font-style:italic; color:var(--gold)">Sail</em> With Us?</h2>
+    <p>Get your free consultation and custom service quote within 24 hours. No obligation.</p>
+    <div class="cta-buttons">
+      <a href="#contact" class="btn-primary">Get a Free Quote</a>
+      <a href="mailto:contactglanders@gmail.com" class="btn-outline">Email Us Directly</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="section-header reveal">
+    <span class="section-tag">Get In Touch</span>
+    <h2 class="section-title">Contact <em>Us</em></h2>
+    <div class="divider"></div>
+    <p class="section-subtitle">Reach out for a custom quote, booking, or to discuss your vessel's needs.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal-left">
+      <div class="contact-item">
+        <div class="contact-item-icon">📧</div>
+        <div>
+          <h4>Email</h4>
+          <p><a href="mailto:contactglanders@gmail.com" style="color:var(--sky)">contactglanders@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div>
+          <h4>Phone / WhatsApp</h4>
+          <p>+1 (800) NNB-BOAT</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div>
+          <h4>Main Office</h4>
+          <p>Berth 7, Marina Boulevard<br>Nautical District, Port City</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">🕐</div>
+        <div>
+          <h4>Operating Hours</h4>
+          <p>Mon–Sat: 7:00 AM – 7:00 PM<br>Emergency: 24/7</p>
+        </div>
+      </div>
+      <!-- Google Maps embed placeholder -->
+      <div style="border-radius:14px; overflow:hidden; border:1px solid var(--glass-border);">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d462561.6574556938!2d54.89784427011719!3d25.076000017028735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sDubai%20Marina!5e0!3m2!1sen!2s!4v1690000000000!5m2!1sen!2s"
+          width="100%" height="200" style="border:0; display:block; filter:invert(0.85) hue-rotate(180deg) saturate(1.2);"
+          allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+    </div>
+    <div class="contact-form reveal-right">
+      <div id="formContent">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="fname" placeholder="James" />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="lname" placeholder="Rothwell" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="james@example.com" />
+        </div>
+        <div class="form-group">
+          <label>Service Interested In</label>
+          <select id="service">
+            <option value="">Select a service...</option>
+            <option>Yacht Charter</option>
+            <option>Vessel Detailing</option>
+            <option>Marine Maintenance</option>
+            <option>Ship Management</option>
+            <option>Boat Transport</option>
+            <option>Safety Training</option>
+            <option>Custom Package</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Your Message</label>
+          <textarea id="msg" placeholder="Tell us about your vessel and what you need..."></textarea>
+        </div>
+        <button class="btn-form" onclick="submitForm()">Send Message ⚓</button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div style="font-size:2.5rem; margin-bottom:14px;">⚓</div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; margin-bottom:10px;">Message Received!</h3>
+        <p style="color:var(--off-white); font-size:0.92rem;">Thank you for reaching out. Our team will respond within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo">
+        <div class="nav-logo-icon">⚓</div>
+        <div class="nav-logo-text">
+          Nautical Noble<span>Premier Marine Services</span>
+        </div>
+      </div>
+      <p>Delivering world-class marine services with uncompromising standards. Your vessel deserves nothing less than excellence.</p>
+      <div class="footer-social">
+        <a href="#" title="Instagram">📸</a>
+        <a href="#" title="Facebook">👥</a>
+        <a href="#" title="LinkedIn">💼</a>
+        <a href="#" title="YouTube">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Yacht Charter</a></li>
+        <li><a href="#services">Vessel Detailing</a></li>
+        <li><a href="#services">Marine Maintenance</a></li>
+        <li><a href="#services">Ship Management</a></li>
+        <li><a href="#services">Boat Transport</a></li>
+        <li><a href="#services">Safety Training</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:contactglanders@gmail.com">contactglanders@gmail.com</a></li>
+        <li><a href="#">+1 (800) NNB-BOAT</a></li>
+        <li><a href="#">Berth 7, Marina Blvd</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Nautical Noble Boat. All rights reserved. Built for the open seas.</p>
+    <p style="color:var(--sky)">⚓ Crafted with maritime pride</p>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/18008662628" id="wa-btn" target="_blank" title="Chat on WhatsApp">💬</a>
+
+<!-- =============================================
+     JAVASCRIPT
+============================================= -->
+<script>
+  /* ---- Loader ---- */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hidden');
+    }, 1800);
+  });
+
+  /* ---- Navbar scroll ---- */
+  const navbar = document.getElementById('navbar');
+  const backTop = document.getElementById('back-top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      navbar.classList.add('scrolled');
+      backTop.classList.add('visible');
+    } else {
+      navbar.classList.remove('scrolled');
+      backTop.classList.remove('visible');
+    }
+    updateActiveNav();
+  });
+
+  /* ---- Active nav ---- */
+  function updateActiveNav() {
+    const sections = ['home','services-preview','about','services','packages','testimonials','why','faq','contact'];
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.classList.remove('active');
+      const href = a.getAttribute('href').replace('#','');
+      if (href === current || (href === 'services' && current === 'services-preview')) a.classList.add('active');
+    });
+  }
+
+  /* ---- Hamburger ---- */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+
+  /* ---- Scroll reveal ---- */
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  /* ---- Counter animation ---- */
+  const counters = document.querySelectorAll('.stat-num[data-count]');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = +entry.target.getAttribute('data-count');
+        const suffix = entry.target.textContent.includes('%') ? '%' : (target >= 1000 ? '+' : '+');
+        let current = 0;
+        const step = target / 60;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) { current = target; clearInterval(timer); }
+          entry.target.textContent = Math.floor(current) + suffix;
+        }, 25);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+
+  /* ---- FAQ accordion ---- */
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  /* ---- Contact form ---- */
+  function submitForm() {
+    const fname = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const msg = document.getElementById('msg').value.trim();
+    if (!fname || !email || !msg) {
+      alert('Please fill in at least your name, email, and message.');
+      return;
+    }
+    // Mailto fallback
+    const subject = encodeURIComponent('Nautical Noble Boat — Service Enquiry');
+    const body = encodeURIComponent(
+      `Name: ${document.getElementById('fname').value} ${document.getElementById('lname').value}\nEmail: ${email}\nService: ${document.getElementById('service').value}\n\nMessage:\n${msg}`
+    );
+    window.open(`mailto:contactglanders@gmail.com?subject=${subject}&body=${body}`);
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+
+  /* ---- Staggered reveal delays for grids ---- */
+  document.querySelectorAll('.services-grid .service-card, .services-full-grid .service-full-card, .packages-grid .package-card, .why-grid .why-card, .testimonials-grid .testimonial-card').forEach((el, i) => {
+    el.style.transitionDelay = `${(i % 3) * 0.12}s`;
+  });
+</script>
+
+</body>
+</html>
